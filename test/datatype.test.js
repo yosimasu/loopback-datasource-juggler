@@ -206,7 +206,7 @@ describe('datatypes', function() {
 
     it('should set missing optional properties to null', function(done) {
       var EXPECTED = {desc: null, stars: null};
-      TestModel.create({name: 'a-test-name'}, function(err, created) {
+      TestModel.create({}, function(err, created) {
         if (err) return done(err);
         created.should.have.properties(EXPECTED);
 
@@ -220,12 +220,12 @@ describe('datatypes', function() {
 
     it('should convert property value undefined to null', function(done) {
       var EXPECTED = {desc: null, extra: null};
+      var data = {desc: undefined, extra: undefined};
       if (isStrict) {
         // SQL-based connectors don't support dynamic properties
         delete EXPECTED.extra;
+        delete data.extra;
       }
-
-      var data = {desc: undefined, extra: undefined};
       TestModel.create(data, function(err, created) {
         if (err) return done(err);
 
