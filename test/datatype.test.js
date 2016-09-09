@@ -192,6 +192,7 @@ describe('datatypes', function() {
       TestModel = db.define(
         'TestModel',
         {
+          name: {type: String, require: false},
           desc: {type: String, required: false},
           stars: {type: Number, required: false},
         },
@@ -206,7 +207,7 @@ describe('datatypes', function() {
 
     it('should set missing optional properties to null', function(done) {
       var EXPECTED = {desc: null, stars: null};
-      TestModel.create({}, function(err, created) {
+      TestModel.create({name: 'a-test-name'}, function(err, created) {
         if (err) return done(err);
         created.should.have.properties(EXPECTED);
 
